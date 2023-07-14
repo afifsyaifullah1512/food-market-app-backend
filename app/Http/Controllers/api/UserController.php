@@ -20,7 +20,7 @@ class UserController extends Controller
     {
         try {
             // Validasi Input Email & Password
-            $request->validate([
+            $request->all([
                 'email' => 'email|required',
                 'password' => 'password',
             ]);
@@ -69,7 +69,7 @@ class UserController extends Controller
     {
         try {
             //Validasi nama field yang harus di isi.
-            $request->validate([ 
+            $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => $this->passwordRules()
@@ -132,7 +132,7 @@ class UserController extends Controller
         [
             'file' => 'required|image|max:2048'
         ]);
-        
+
         if($validator->fails()) {
             return ResponseFormatter::error(
                 ['error' => $validator->errors()],
@@ -141,7 +141,7 @@ class UserController extends Controller
         }
 
         if($request->file('file')) {
-            
+
             $file = $request->file->store('assets/user','public');
 
             $user = Auth::user();

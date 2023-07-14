@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Midtrans\Config;
 use Midtrans\Notification;
@@ -25,5 +26,47 @@ class MidtransController extends Controller
         $type = $notification->payment_type;
         $fraud = $notification->fraud_status;
         $order_id = $notification->order_id;
+
+        //Cari Transaksi by Order id Transaction
+        $transaction = Transaction::findOrFail($order_id);
+
+        //Handle Notification Midtrans
+        if ($status == 'capture') {
+            if ($type == 'credit_card') {
+                if ($fraud == 'challenge') {
+                    $transaction->status = 'PENDING';
+                } else {
+                    $transaction->status = 'SUCCESS';
+                }
+            }
+        } elseif ($status == 'settlement') {
+            $transaction->status = 'SUCCESS';
+        } elseif ($status == 'pending') {
+            $transaction->status = 'PENDING';
+        } elseif ($status == 'deny') {
+            $transaction->status = 'CANCELLED';
+        } elseif ($status == 'expire') {
+            $transaction->status = 'CANCELLED';
+        } elseif ($status == 'cancel') {
+            $transaction->status = 'CANCELLED';
+        }
+
+        //Simpan Transaksi
+        $transaction->save();
+    }
+
+    public function success()
+    {
+        return view('midtrans.success');
+    }
+
+    public function unfinish()
+    {
+        return view('midtrans.success');
+    }
+
+    public function error()
+    {
+        return view('midtrans.success');
     }
 }
