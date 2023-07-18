@@ -1,3 +1,5 @@
+<!-- resources/views/transactions/show.blade.php -->
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -5,82 +7,77 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="w-full rounded overflow-hidden shadow-lg px-6 py-6 bg-white">
-                <div class="flex flex-wrap -mx-4 -mb-4 md:mb-0">
-                    <div class="w-full md:w-1/6 px-4 mb-4 md:mb-0">
-                        <img src="{{ $item->food->picturePath }}" alt="" class="w-full rounded">
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div class="bg-white overflow-hidden shadow-md rounded-lg">
+                    <img src="{{ $item->food->picturePath }}" alt="{{ $item->food->name }}" class="w-full h-32 object-cover rounded-t-lg">
+                    <div class="px-4 py-4">
+                        <h3 class="text-xl font-semibold mb-2">{{ $item->food->name }}</h3>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm">Quantity:</span>
+                            <span class="font-bold">{{ number_format($item->quantity) }}</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm">Total:</span>
+                            <span class="font-bold">{{ number_format($item->total) }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm">Status:</span>
+                            <span class="font-bold">{{ $item->status }}</span>
+                        </div>
                     </div>
-                    <div class="w-full md:w-5/6 px-4 mb-4 md:mb-0">
-                        <div class="flex flex-wrap mb-3">
-                            <div class="w-2/6">
-                                <div class="text-sm">Product Name</div>
-                                <div class="text-xl font-bold">{{ $item->food->name }}</div>
-                            </div>
-                            <div class="w-1/6">
-                                <div class="text-sm">Quantity</div>
-                                <div class="text-xl font-bold">{{ number_format($item->quantity) }}</div>
-                            </div>
-                            <div class="w-2/6">
-                                <div class="text-sm">Total</div>
-                                <div class="text-xl font-bold">{{ number_format($item->total) }}</div>
-                            </div>
-                            <div class="w-1/6">
-                                <div class="text-sm">Status</div>
-                                <div class="text-xl font-bold">{{ $item->status }}</div>
+                </div>
+
+                <div class="bg-white overflow-hidden shadow-md rounded-lg md:w-80 md:self-start">
+                    <div class="px-4 py-4">
+                        <h3 class="text-xl font-semibold mb-4">User Information</h3>
+                        <div class="mb-2">
+                            <span class="text-sm">Username:</span>
+                            <span class="font-bold">{{ $item->user->name }}</span>
+                        </div>
+                        <div class="mb-2">
+                            <span class="text-sm">Email:</span>
+                            <span class="font-bold">{{ $item->user->email }}</span>
+                        </div>
+                        <div class="mb-2">
+                            <span class="text-sm">City:</span>
+                            <span class="font-bold">{{ $item->user->city }}</span>
+                        </div>
+                        <div class="mb-2">
+                            <span class="text-sm">Address:</span>
+                            <span class="font-bold">{{ $item->user->address }}</span>
+                        </div>
+                        <div class="mb-2">
+                            <span class="text-sm">Number:</span>
+                            <span class="font-bold">{{ $item->user->houseNumber }}</span>
+                        </div>
+                        <div class="mb-2">
+                            <span class="text-sm">Phone Number:</span>
+                            <span class="font-bold">{{ $item->user->phoneNumber }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white overflow-hidden shadow-md rounded-lg md:w-80 md:self-start">
+                    <div class="px-4 py-4">
+                        <h3 class="text-xl font-semibold mb-4">Payment Information</h3>
+                        <div class="mb-4">
+                            <span class="text-sm">Payment URL:</span>
+                            <div class="text-lg">
+                                <a href="{{ $item->payment_url }}" class="text-blue-500 hover:underline">{{ $item->payment_url }}</a>
                             </div>
                         </div>
-                        <div class="flex flex-wrap mb-3">
-                            <div class="w-2/6">
-                                <div class="text-sm">User Name</div>
-                                <div class="text-xl font-bold">{{ $item->user->name }}</div>
-                            </div>
-                            <div class="w-3/6">
-                                <div class="text-sm">Email</div>
-                                <div class="text-xl font-bold">{{ $item->user->email }}</div>
-                            </div>
-                            <div class="w-1/6">
-                                <div class="text-sm">City</div>
-                                <div class="text-xl font-bold">{{ $item->user->city }}</div>
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap mb-3">
-                            <div class="w-4/6">
-                                <div class="text-sm">Address</div>
-                                <div class="text-xl font-bold">{{ $item->user->address }}</div>
-                            </div>
-                            <div class="w-1/6">
-                                <div class="text-sm">Number</div>
-                                <div class="text-xl font-bold">{{ $item->user->houseNumber }}</div>
-                            </div>
-                            <div class="w-1/6">
-                                <div class="text-sm">Phone</div>
-                                <div class="text-xl font-bold">{{ $item->user->phoneNumber }}</div>
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap mb-3">
-                            <div class="w-5/6">
-                                <div class="text-sm">Payment URL</div>
-                                <div class="text-lg">
-                                    <a href="{{ $item->payment_url }}">{{ $item->payment_url }}</a>
-                                </div>
-                            </div>
-                            <div class="w-1/6">
-                                <div class="text-sm mb-1">Change Status</div>
-                                <a href="{{ route('transactions.changeStatus', ['id' => $item->id, 'status' => 'ON_DELIVERY']) }}"
-                                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-2 rounded block text-center w-full mb-1">
-                                    On Delivery
-                                </a>
-                                <a href="{{ route('transactions.changeStatus', ['id' => $item->id, 'status' => 'DELIVERED']) }}"
-                                   class="bg-green-500 hover:bg-green-700 text-white font-bold px-2 rounded block text-center w-full mb-1">
-                                    Delivered
-                                </a>
-                                <a href="{{ route('transactions.changeStatus', ['id' => $item->id, 'status' => 'CANCELLED']) }}"
-                                   class="bg-red-500 hover:bg-red-700 text-white font-bold px-2 rounded block text-center w-full mb-1">
-                                    Cancelled
-                                </a>
-                            </div>
+                        <div class="space-x-2">
+                            <a href="{{ route('transactions.changeStatus', ['id' => $item->id, 'status' => 'ON_DELIVERY']) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded">
+                                On Delivery
+                            </a>
+                            <a href="{{ route('transactions.changeStatus', ['id' => $item->id, 'status' => 'DELIVERED']) }}" class="bg-green-500 hover:bg-green-700 text-white font-bold px-4 py-2 rounded">
+                                Delivered
+                            </a>
+                            <a href="{{ route('transactions.changeStatus', ['id' => $item->id, 'status' => 'CANCELLED']) }}" class="bg-red-500 hover:bg-red-700 text-white font-bold px-4 py-2 rounded">
+                                Cancelled
+                            </a>
                         </div>
                     </div>
                 </div>
