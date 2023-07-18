@@ -40,9 +40,7 @@ class FoodController extends Controller
     {
         $data = $request->all();
 
-        if ($request->hasFile('picturePath')) {
-            $data['picturePath'] = $request->file('picturePath')->store('assets/food', 'public');
-        }
+        $data['picturePath'] = $request->file('picturePath')->store('assets/food', 'public');
 
         Food::create($data);
 
@@ -82,7 +80,8 @@ class FoodController extends Controller
     {
         $data = $request->all();
 
-        if ($request->hasFile('picturePath')) {
+        if($request->file('picturePath'))
+        {
             $data['picturePath'] = $request->file('picturePath')->store('assets/food', 'public');
         }
 
